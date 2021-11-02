@@ -55,10 +55,10 @@ private fun Greeting(name: String) {
             }
             OutlinedButton(
                 onClick = {
-                    expanded = !expanded
+                    expanded.value = !expanded.value
                 }
             ) {
-                Text(text = if (expanded) "Show less" else "Show more")
+                Text(text = if (expanded.value) "Show less" else "Show more")
             }
         }
     }
