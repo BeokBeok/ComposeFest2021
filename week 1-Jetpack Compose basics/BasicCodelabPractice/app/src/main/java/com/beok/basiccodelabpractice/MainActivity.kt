@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -63,8 +66,14 @@ private fun Greetings(names: List<String> = List(1_000) { "$it" }) {
 
 @Composable
 private fun Greeting(name: String) {
-    val expanded = remember { mutableStateOf(false) }
-    val extraPadding = if (expanded.value) 48.dp else 8.dp
+    var expanded by rememberSaveable { mutableStateOf(false) }
+    val extraPadding by animateDpAsState(
+        targetValue = if (expanded) 48.dp else 0.dp,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy, // bounce size
+            stiffness = Spring.StiffnessLow // speed
+        )
+    )
 
     Surface(
         color = MaterialTheme.colors.primary,
@@ -74,17 +83,17 @@ private fun Greeting(name: String) {
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(bottom = extraPadding)
+                    .padding(bottom = extraPadding.coerceAtLeast(0.dp))
             ) {
                 Text(text = "Hello,")
                 Text(text = name)
             }
             OutlinedButton(
                 onClick = {
-                    expanded.value = !expanded.value
+                    expanded = !expanded
                 }
             ) {
-                Text(text = if (expanded.value) "Show less" else "Show more")
+                Text(text = if (expanded) "Show less" else "Show more")
             }
         }
     }
