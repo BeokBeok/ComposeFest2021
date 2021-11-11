@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -108,11 +109,11 @@ private fun BodyContent(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun SimpleList() {
-    val scrollState = rememberScrollState()
+fun LazyList() {
+    val scrollState = rememberLazyListState()
 
-    Column(modifier = Modifier.verticalScroll(scrollState)) {
-        repeat(100) {
+    LazyColumn(state = scrollState) {
+        items(100) {
             Text(text = "Item #$it")
         }
     }
