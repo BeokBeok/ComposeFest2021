@@ -10,8 +10,10 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -90,7 +92,10 @@ fun LayoutsCodelab() {
             )
         }
     ) { innerPadding ->
-        BodyContent(Modifier.padding(innerPadding).padding(8.dp))
+        BodyContent(
+            Modifier
+                .padding(innerPadding)
+                .padding(8.dp))
     }
 }
 
@@ -99,6 +104,17 @@ private fun BodyContent(modifier: Modifier = Modifier) {
     Column(modifier = modifier) {
         Text(text = "Hi there!")
         Text(text = "Thanks for going through the Layouts codelab")
+    }
+}
+
+@Composable
+fun SimpleList() {
+    val scrollState = rememberScrollState()
+
+    Column(modifier = Modifier.verticalScroll(scrollState)) {
+        repeat(100) {
+            Text(text = "Item #$it")
+        }
     }
 }
 
