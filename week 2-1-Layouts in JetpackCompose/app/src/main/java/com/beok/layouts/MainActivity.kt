@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -14,6 +15,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -67,10 +69,33 @@ fun PhotographerCard(modifier: Modifier = Modifier) {
     }
 }
 
+@Composable
+fun LayoutsCodelab() {
+    Scaffold { innerPadding ->
+        BodyContent(Modifier.padding(innerPadding))
+    }
+}
+
+@Composable
+private fun BodyContent(modifier: Modifier = Modifier) {
+    Column(modifier = modifier) {
+        Text(text = "Hi there!")
+        Text(text = "Thanks for going through the Layouts codelab")
+    }
+}
+
 @Preview
 @Composable
 fun PhotographerCardPreview() {
     LayoutsTheme {
         PhotographerCard()
+    }
+}
+
+@Preview
+@Composable
+fun LayoutsPreview() {
+    LayoutsTheme {
+        LayoutsCodelab()
     }
 }
