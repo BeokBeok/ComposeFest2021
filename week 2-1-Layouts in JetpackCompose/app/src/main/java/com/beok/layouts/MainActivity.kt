@@ -112,9 +112,11 @@ fun LayoutsCodelab() {
 
 @Composable
 private fun BodyContent(modifier: Modifier = Modifier) {
-    Column(modifier = modifier) {
-        Text(text = "Hi there!")
-        Text(text = "Thanks for going through the Layouts codelab")
+    MyOwnColumn(modifier = modifier) {
+        Text("MyOwnColumn")
+        Text("places items")
+        Text("vertically.")
+        Text("We've done it by hand!")
     }
 }
 
@@ -185,15 +187,27 @@ fun Modifier.firstBaselineToTop(
 )
 
 @Composable
-fun CustomLayout(
+fun MyOwnColumn(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
     Layout(
         modifier = modifier,
         content = content
-    ) { measurable, constraints ->
+    ) { measurables, constraints ->
+        val placeables = measurables.map { measurable ->
+            measurable.measure(constraints)
+        }
 
+        var yPosition = 0
+
+        layout(constraints.maxWidth, constraints.maxHeight) {
+            placeables.forEach { placeable ->
+                placeable.placeRelative(x = 0, y = yPosition)
+
+                yPosition += placeable.height
+            }
+        }
     }
 }
 
