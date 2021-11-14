@@ -62,6 +62,17 @@ import coil.compose.rememberImagePainter
 import com.beok.layouts.ui.theme.LayoutsTheme
 import kotlinx.coroutines.launch
 
+@Stable
+fun Modifier.customPadding(all: Dp) = this.then(
+    PaddingModifier(
+        start = all,
+        top = all,
+        end = all,
+        bottom = all,
+        rtlAware = true
+    )
+)
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -128,7 +139,13 @@ fun LayoutsCodelab() {
 
 @Composable
 private fun BodyContent(modifier: Modifier = Modifier) {
-    Row(modifier = modifier.horizontalScroll(rememberScrollState())) {
+    Row(
+        modifier = modifier
+            .background(color = Color.LightGray)
+            .customPadding(16.dp)
+            .size(200.dp)
+            .horizontalScroll(rememberScrollState())
+    ) {
         StaggerGrid(modifier = modifier) {
             for (topic in topics) {
                 Chip(modifier = modifier, text = topic)
@@ -302,17 +319,6 @@ fun Chip(modifier: Modifier = Modifier, text: String) {
         }
     }
 }
-
-@Stable
-fun Modifier.padding(all: Dp) = this.then(
-    PaddingModifier(
-        start = all,
-        top = all,
-        end = all,
-        bottom = all,
-        rtlAware = true
-    )
-)
 
 private class PaddingModifier(
     val start: Dp = 0.dp,
